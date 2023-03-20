@@ -1,3 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Fasthand&family=Merriweather+Sans:wght@300;400;600&family=Poppins:wght@200;300;400&display=swap');
+
+/* Fonts 
+font-family: 'Fasthand', cursive;
+font-family: 'Merriweather Sans', sans-serif;
+font-family: 'Poppins', sans-serif; 
+*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    font-family: 'Merriweather Sans', sans-serif;
+}
+.logo{
+    font-family: 'Fasthand', cursive;
+}
+
+.hero-header{
+    font-family: 'Poppins', sans-serif; 
+}
