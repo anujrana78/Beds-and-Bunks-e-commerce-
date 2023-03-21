@@ -2,8 +2,11 @@ import React from "react";
 import { MdOutlineLocalShipping, MdAddCall } from "react-icons/md";
 import { BsFillBoxFill } from "react-icons/bs";
 import { RiSecurePaymentFill } from "react-icons/ri";
+import { motion } from "framer-motion"
 
-const card_items = [
+
+// Creating services array for mimizing the code 
+const services = [
   {
     title: "Free Shipping",
     desc: "Deliver all over the country",
@@ -41,17 +44,27 @@ const card_items = [
 const Services = () => {
   return (
     <div className="flex justify-center items-center my-20 gap-2">
-      {card_items.map((item, index) => {
+      {services.map((item, index) => {
         return (
-          <div className={`flex justify-center items-center rounded p-8 w-[20%] ${item.bg}`}>
+            <motion.button
+            whileHover={{
+              scale: 1.03,
+              transition: { duration: 1 },
+            }}
+            whileTap={{ scale: 0.9 }}
+            className={`flex justify-center items-center rounded p-8 w-[20%] ${item.bg}`}
+            key={index}
+          >
+          
             <div>{item.icon}</div>
             <div>
               <h3 className="font-bold">{item.title}</h3>
               <p className="font-thin text-sm">{item.desc}</p>
             </div>
-          </div>
+          </motion.button>
         );
       })}
+   
     </div>
   );
 };

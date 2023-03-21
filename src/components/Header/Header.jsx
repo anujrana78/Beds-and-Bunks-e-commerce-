@@ -1,5 +1,5 @@
 import React from "react";
-import usericon from "../assets/images/user-icon.png";
+import usericon from "../../assets/images/user-icon.png";
 import { BsBag } from "react-icons/bs";
 import { BiBed } from "react-icons/bi";
 import { AiOutlineHeart } from "react-icons/ai";

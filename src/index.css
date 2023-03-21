@@ -20,3 +20,11 @@ body{
 .hero-header{
     font-family: 'Poppins', sans-serif; 
 }
+
+/* to show add to cart when hovering + icon on product */
+.add_icon:hover + .add_icon__cart  {
+    display: block
+}
+.add_icon__cart:hover {
+    display: block;
+}
