@@ -28,3 +28,14 @@ body{
 .add_icon__cart:hover {
     display: block;
 }
+
+/* To make header sticky when scroll*/
+.sticky_header{
+    position: sticky !important;
+    width: 100%;
+    height: 70px;
+    z-index: 100;
+    top:0;
+    left : 0;
+    background: #FFFF;
+}

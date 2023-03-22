@@ -3,7 +3,7 @@ import { BiBed } from "react-icons/bi";
 
 const Footer = () => {
   return (
-    <div className="flex bg-green-900 mt-24 px-20 py-20 justify-center items-center gap-[2%] text-white">
+    <div className="flex bg-blue-900 mt-24 px-20 py-20 justify-center items-center gap-[2%] text-white">
         <BiBed className="m-0 p-0 text-[100px]"/>
     
       <section className="w-[40%] border-r-[1px] p-3 h-[150px]">
@@ -11,7 +11,7 @@ const Footer = () => {
             Bed <span className="text-[16px]">&</span> Bunk{" "}
           </h2>
         <p className="font-thin mt-2 text-sm">
-          Bed and Bunk is a ecommerce project created by{" "}
+          Bed and Bunk is an ecommerce project created by{" "}
           <span className='font-bold text-xl'> Anuj Rana </span> for the final semester project. Please feel
           free to test the app.{" "}
         </p>
