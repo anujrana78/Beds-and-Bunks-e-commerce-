@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import usericon from "../../assets/images/user-icon.png";
 import { BsBag } from "react-icons/bs";
 import { BiBed } from "react-icons/bi";
 import { AiOutlineHeart } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import {RxHamburgerMenu,RxCross2} from 'react-icons/rx'
+import { useSelector } from "react-redux";
 
 // navigation links array and display name
 const nav_link = [
@@ -23,22 +25,41 @@ const nav_link = [
 
 const Header = () => {
   const headerRef = useRef(null);
+  const navRef = useRef(null)
+  const [displayNav,setDisplayNav] = useState(false)
 
+  const numberOfItems = useSelector(state => state.cart.totalQuantity)
+
+  // Sticky navbar while scrolling through the page
   const stickyHeaderFunc = () => {
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       if (
         document.body.scrollTop > 80 ||
         document.documentElement.scrollTop > 80
       ) {
-        headerRef.current.classList.add('sticky_header');
+        headerRef.current.classList.add("sticky_header");
+        navRef.current.classList.add("nav_sticky");
+
       } else {
-        headerRef.current.classList.remove('sticky_header');
+        headerRef.current.classList.remove("sticky_header");
+        navRef.current.classList.remove("nav_sticky")
       }
     });
   };
 
+  const toggleMenu = () => {
+    setDisplayNav(!displayNav)
+
+    if(displayNav){
+      navRef.current.classList.add('show_menu')
+    }else{
+      navRef.current.classList.remove('show_menu')
+    }
+  }
+  console.log(displayNav)
+ 
+
   useEffect(() => {
-    
     stickyHeaderFunc();
 
     return () => window.removeEventListener("scroll", stickyHeaderFunc);
@@ -46,53 +67,59 @@ const Header = () => {
 
   return (
     <header
-      className="flex justify-between p-5 back items-center text-black px-10"
+      className="flex justify-between  items-center text-black sm:px-10 p-3 sm:p-2 transition-all"
       ref={headerRef}
     >
-      <div className="flex items-center justify-center gap-2 font-bold">
+      <div className="flex items-center justify-center gap-2 font-bold z-10">
         <BiBed className="text-2xl" />
         <h2 className="text-[20px] logo">
-          Bed <span className="text-[16px]">&</span> Bunk{" "}
+          <Link to="/home">
+          Bed <span className="text-[16px]">&</span> Bunk{" "}</Link>
         </h2>
       </div>
-      <nav className="ml-[-20px]">
-        <ul className="flex gap-5 ">
+      <nav className=" p-2 sm:ml-[-20px] show_menu" ref={navRef}>
+        <ul className="gap-5 sm:flex ">
           {nav_link.map((item, index) => {
             return (
-              <li key={index}>
+              <li key={index} className='m-2 text-[14px]   md:text-[16px]'>
                 <NavLink
                   to={item.path}
                   className={(nav) =>
                     nav.isActive ? "font-bold text-red-300" : ""
-                  }
+                  } 
                 >
-                  {item.display}
+                  {item.display}        
                 </NavLink>
               </li>
             );
           })}
         </ul>
       </nav>
+     
       <div className="flex gap-5 items-center text-black justify-center">
         <div className="relative">
-          <AiOutlineHeart className="text-[25px] hover:cursor-pointer " />
+          <AiOutlineHeart className="sm:text-[25px] hover:cursor-pointer " />
           <span className="h-[10px] w-[10px] flex justify-center items-center bg-black rounded-[10px] text-white text-[9px] p-2 absolute top-[-4px] left-4 bottom-6">
             2
           </span>
         </div>
 
         <div className="relative">
-          <BsBag className="text-[20px] hover:cursor-pointer" />
-          <span className="h-[10px] w-[10px] flex justify-center items-center bg-black rounded-[10px] text-white text-[9px] p-2 absolute top-[-6px] left-3 bottom-6">
-            1
-          </span>
+          <Link to="/cart">
+          <BsBag className="sm:text-[20px] hover:cursor-pointer" />
+          </Link>
+         {numberOfItems > 0 && <span className="h-[10px] w-[10px] flex justify-center items-center bg-black rounded-[10px] text-white text-[9px] p-2 absolute top-[-6px] left-3 bottom-6">
+            {numberOfItems}
+          </span>}
         </div>
         <img
           src={usericon}
           alt="usericon"
-          className="h-8 hover:cursor-pointer"
+          className="md:h-8 hover:cursor-pointer h-6"
         />
+         {displayNav ? <RxCross2 className="sm:hidden" onClick={toggleMenu}/> :<RxHamburgerMenu className="sm:hidden" onClick={toggleMenu}/> }
       </div>
+      
     </header>
   );
 };

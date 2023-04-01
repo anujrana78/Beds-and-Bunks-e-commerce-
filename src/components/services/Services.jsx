@@ -33,7 +33,7 @@ const services = [
   },
   {
     title: "Support",
-    desc: "On demand support",
+    desc: "On Call demand support",
     icon: (
       <MdAddCall className="bg-black text-white rounded-full text-5xl mr-2 p-1" />
     ),
@@ -43,21 +43,21 @@ const services = [
 
 const Services = () => {
   return (
-    <div className="flex justify-center items-center my-20 gap-2">
+    <div className='sm:flex justify-center items-center sm:my-20 sm:gap-2 md:px-28 p-3 sm:flex-wrap'>
       {services.map((item, index) => {
         return (
             <motion.button
             whileHover={{
               scale: 1.03,
               transition: { duration: 1 },
-            }}
+            }} 
             whileTap={{ scale: 0.9 }}
-            className={`flex justify-center items-center rounded p-8 w-[20%] ${item.bg}`}
+            className={`flex justify-center items-center rounded p-8 sm:w-[20%] ${item.bg} w-[100%] mt-2 sm:first-letter sm:flex-[40%] md:flex-auto`}
             key={index}
           >
           
             <div>{item.icon}</div>
-            <div>
+            <div className="text-left ">
               <h3 className="font-bold">{item.title}</h3>
               <p className="font-thin text-sm">{item.desc}</p>
             </div>

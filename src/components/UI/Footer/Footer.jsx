@@ -3,17 +3,17 @@ import { BiBed } from "react-icons/bi";
 
 const Footer = () => {
   return (
-    <div className="flex bg-blue-900 mt-24 px-20 py-20 justify-center items-center gap-[2%] text-white">
-        <BiBed className="m-0 p-0 text-[100px]"/>
+    <div className=" bg-gray-800 sm:mt-24 sm:px-20 sm:py-14 justify-center items-center gap-[2%] text-white sm:flex   pt-5 mt-10">
+      <BiBed className="m-0 p-0 sm:text-[100px] sm:display-block hidden"/>
     
-      <section className="w-[40%] border-r-[1px] p-3 h-[150px]">
+      <section className="sm:w-[40%] sm:border-r-[1px] p-3 h-[150px]">
       <h2 className="text-[30px] logo">
-            Bed <span className="text-[16px]">&</span> Bunk{" "}
+            Bed <span className="text-[16px]">&</span> Bunk
           </h2>
-        <p className="font-thin mt-2 text-sm">
-          Bed and Bunk is an ecommerce project created by{" "}
+        <p className="font-thin mt-2 text-sm text-justify">
+          Bed and Bunk is an ecommerce project created by
           <span className='font-bold text-xl'> Anuj Rana </span> for the final semester project. Please feel
-          free to test the app.{" "}
+          free to test the app.
         </p>
       </section>
 
