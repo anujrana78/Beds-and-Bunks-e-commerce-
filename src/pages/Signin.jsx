@@ -2,9 +2,8 @@ import React from "react";
 import { useFormik } from "formik";
 import titleImage from "../assets/images/login.jpg";
 import { Link } from "react-router-dom";
-import Signup from "./Signup";
 
-const Login = () => {
+const Signin = () => {
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
   const formik = useFormik({
@@ -19,7 +18,7 @@ const Login = () => {
   return (
     <div className=" sm:flex sm:mx-[20%] justify-center sm:mt-10">
     <div className="w-[40%] hidden sm:block">
-      <img src={titleImage } className="object-contain h-[100%] "></img>
+      <img src={titleImage } className="object-contain h-[100%] " alt=""></img>
     </div>
 
       <div className=" mt-6 px-8 font-poppins sm:bg-gray-100 sm:mt-0 pr-10 sm:pt-16">
@@ -68,4 +67,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signin;

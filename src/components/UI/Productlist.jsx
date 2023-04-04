@@ -16,6 +16,7 @@ const Productlist = ({ data }) => {
             category={item.category}
             price={item.price}
             key={item.id}
+            avgRating={item.avgRating}
             className="h-[3px]"
           />
         );

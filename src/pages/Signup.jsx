@@ -1,21 +1,71 @@
-import React from 'react'
-import Footer from '../components/UI/Footer/Footer'
+import React from "react";
+import { useFormik } from "formik";
+import titleImage from "../assets/images/login.jpg";
+import { Link } from "react-router-dom";
+
 
 const Signup = () => {
+  // Pass the useFormik() hook initial form values and a submit function that will
+  // be called when the form is submitted
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password : ''
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
   return (
-    <>
-    <div className='flex-col text-center mx-[4%] mt-20 p-10  rounded bg-gradient-to-r from-blue-300 via-blue-5=800 to-blue-500 sm:mt-8 sm:mx-[30%]'>
-      <h2 className='text-2xl text-white font-serif logo'>Sign up</h2>
-        <p className='text-[10px] font-thin text-white mt-1'>sign up now to buy new furniture</p>
-      <div className=' flex-col items-center justify-center text-center'>
-        <div><input type="text" placeholder='email' className='border-2 mt-7 px-3 py-1 rounded text-[12px] font-thin outline-none' /></div>
-        <div><input type = "password" placeholder='password' className='border-2 m-4 px-3 py-1 rounded text-[12px] font-thin outline-none'/></div>
-        <div><button className='bg-black   rounded-sm text-white px-3 py-1 mt-1 text-[10px]' autofill="false ">Create account</button></div>
+    <div className=" sm:flex sm:mx-[20%] justify-center sm:mt-10">
+    <div className="w-[40%] hidden sm:block">
+      <img src={titleImage } className="object-contain h-[100%] "></img>
+    </div>
+
+      <div className=" mt-6 px-8 font-poppins sm:bg-gray-100 sm:mt-0 pr-10 sm:pt-16">
+        <h2 className="font-montserrat text-lg text-left font-semibold">
+          Welcome to{" "}
+          <span className="font-fasthand font-thin">Beds & Bunks</span>,<br />{" "}
+          Sign Up to Create Account
+        </h2>
+        <p className="text-[10px] mt-3 ">
+          Already have an account?{" "}
+          <Link className="font-bold" to='/signin'><u>sign in </u></Link>
+          <br /> It takes less than a minute
+        </p>
+        <div className=" flex justify-center items-center mt-2">
+          <form
+            className="  w-[100%] m-auto font-montserrat mt-8"
+            onSubmit={formik.handleSubmit}
+          >
+            <label className="text-sm ">Email</label>
+            <input
+              type="email"
+              id="email"
+              className="block  px-2 text-sm border-[1px] border-gray-300 rounded-sm font-thin p-1 outline-none w-[100%] mt-1 mb-2"
+              onChange={formik.handleChange}
+              value={formik.values.email} 
+            />
+            <label className="text-sm">Password</label>
+            <input
+              type="password"
+              id="password"
+              className="block px-2 text-sm border-[1px] border-gray-300 rounded-sm font-thin p-1 outline-none w-[100%] mt-1"
+              onChange={formik.handleChange}
+              value={formik.values.password} 
+           />
+            <p className="text-[10px] text-center mt-4">
+              <u>Forgot Password?</u>
+            </p>
+            <button className="text-white bg-black px-2 py-2 rounded-sm w-[100%] mt-4">
+              Sign in
+            </button>
+           
+          </form>
+        </div>
       </div>
     </div>
-    <Footer/>
-    </>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

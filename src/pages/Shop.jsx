@@ -67,44 +67,49 @@ const Shop = () => {
 
   return (
     <>
-     <Helmet>
+      <Helmet>
         <title>Beds & Bunks - Shop</title>
       </Helmet>
-      <Commonsection/>
-      <div className="flex justify-center gap-2 mt-8 ">
+      <Commonsection />
+      <div className="sm:flex text-center justify-center gap-2 mt-8">
         <input
           type="text"
           className="border-2 rounded p-1 font-thin outline-none px-5"
           placeholder="Search"
           onChange={filterData}
         />
-
-        <div>
-          <select
-            className="bg-gray-800 rounded-sm text-white p-2"
-            onChange={handleSortByCategory}
-            value={sortByCategory}
-            id="sort"
-          >
-            {sortOptions.map((item) => {
-              return <option value={item.value}>{item.label}</option>;
-            })}
-          </select>
-        </div>
-        <div>
-          <select
-            className="bg-gray-800 rounded-sm text-white p-2"
-            value={sortByPrice}
-            onChange={handleSortByPrice}
-          >
-            {priceOptions.map((item) => {
-              return <option value={item.value}>{item.label}</option>;
-            })}
-          </select>
+        <div className="flex justify-center mt-2 sm:mt-0 gap-1">
+          <div>
+            <select
+              className="bg-gray-800 rounded-sm text-white text-sm font-thin p-2"
+              onChange={handleSortByCategory}
+              value={sortByCategory}
+              id="sort"
+            >
+              {sortOptions.map((item) => {
+                return <option value={item.value} className="text-sm font-thin">{item.label}</option>;
+              })}
+            </select>
+          </div>
+          <div>
+            <select
+              className="bg-gray-800 rounded-sm font-thin text-sm text-white p-2"
+              value={sortByPrice}
+              onChange={handleSortByPrice}
+            >
+              {priceOptions.map((item) => {
+                return <option value={item.value} className="text-sm font-thin">{item.label}</option>;
+              })}
+            </select>
+          </div>
         </div>
       </div>
-      {filteredItem.length < 1 ?  <p>Sorry No products founds</p> : <Productlist data={filteredItem} />}
-      <Footer/>
+      {filteredItem.length < 1 ? (
+        <p>Sorry No products founds</p>
+      ) : (
+        <Productlist data={filteredItem} />
+      )}
+      <Footer />
     </>
   );
 };
