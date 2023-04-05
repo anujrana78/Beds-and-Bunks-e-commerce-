@@ -1,27 +1,80 @@
-import React from "react";
-import { useFormik } from "formik";
+import React, { useState, useEffect } from "react";
 import titleImage from "../assets/images/login.jpg";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db, storage } from "../firebase.config.js";
+import { toast } from "react-toastify";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore";
 
 const Signup = () => {
-  // Pass the useFormik() hook initial form values and a submit function that will
-  // be called when the form is submitted
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password : ''
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [username, setUsername] = useState();
+  const [selectedImage, setSelectedImage] = useState(null);
+  const navigate = useNavigate()
+
+  const handleUsername = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const notify = (msg) => toast(msg);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const storageRef = ref(storage, `images/${Date.now() + username}`);
+      const uploadTask = uploadBytesResumable(storageRef, selectedImage);
+
+      uploadTask.on(
+        (error) => {
+          toast.error(error.message);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            updateProfile(user, {
+              displayName: username,
+              photoURL: downloadURL,
+            });
+
+            await setDoc(doc(db, "users", user.uid), {
+              uid: user.uid,
+              displayName: username,
+              email,
+              photoURL: downloadURL,
+            });
+          });
+        }
+      );
+
+      const user = userCredentials.user;
+
+      notify("Account Created");
+      navigate('/signin')
+    } catch (error) {
+      notify(error.code);
+    }
+  };
+
   return (
     <div className=" sm:flex sm:mx-[20%] justify-center sm:mt-10">
-    <div className="w-[40%] hidden sm:block">
-      <img src={titleImage } className="object-contain h-[100%] "></img>
-    </div>
-
+      <div className="w-[40%] hidden sm:block">
+        <img src={titleImage} className="object-contain h-[100%] " alt=""></img>
+      </div>
       <div className=" mt-6 px-8 font-poppins sm:bg-gray-100 sm:mt-0 pr-10 sm:pt-16">
         <h2 className="font-montserrat text-lg text-left font-semibold">
           Welcome to{" "}
@@ -30,37 +83,56 @@ const Signup = () => {
         </h2>
         <p className="text-[10px] mt-3 ">
           Already have an account?{" "}
-          <Link className="font-bold" to='/signin'><u>sign in </u></Link>
+          <Link className="font-bold" to="/signin">
+            <u>sign in </u>
+          </Link>
           <br /> It takes less than a minute
         </p>
         <div className=" flex justify-center items-center mt-2">
           <form
             className="  w-[100%] m-auto font-montserrat mt-8"
-            onSubmit={formik.handleSubmit}
+            onSubmit={handleSubmit}
           >
+            <label className="text-sm">Username</label>
+            <input
+              type="text"
+              id="username"
+              className="block  px-2 text-sm border-[1px] border-gray-300 rounded-sm font-thin p-1 outline-none w-[100%] mt-1 mb-2"
+              onChange={handleUsername}
+              value={username}
+            />
             <label className="text-sm ">Email</label>
+
             <input
               type="email"
               id="email"
               className="block  px-2 text-sm border-[1px] border-gray-300 rounded-sm font-thin p-1 outline-none w-[100%] mt-1 mb-2"
-              onChange={formik.handleChange}
-              value={formik.values.email} 
+              onChange={handleEmail}
+              value={email}
             />
             <label className="text-sm">Password</label>
             <input
               type="password"
               id="password"
               className="block px-2 text-sm border-[1px] border-gray-300 rounded-sm font-thin p-1 outline-none w-[100%] mt-1"
-              onChange={formik.handleChange}
-              value={formik.values.password} 
-           />
+              onChange={handlePassword}
+              value={password}
+            />
             <p className="text-[10px] text-center mt-4">
               <u>Forgot Password?</u>
             </p>
+
+            <input
+              type="file"
+              name="myImage"
+              onChange={(event) => {
+                console.log(event.target.files[0]);
+                setSelectedImage(event.target.files[0]);
+              }}
+            />
             <button className="text-white bg-black px-2 py-2 rounded-sm w-[100%] mt-4">
               Sign in
             </button>
-           
           </form>
         </div>
       </div>
